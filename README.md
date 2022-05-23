@@ -12,20 +12,25 @@
 
 ### My to do list:
 - [x] fetch the file from API
-  - returns a file with pokemone names and url to fetch more info about each.
+  - returns a file with pokemone names and url to fetch more info about each.<br>
+*Realized that I need to fetch by name and ID there is no need to fetch all of the pokemons at the same time* 
+- [x] change your code structure so that only fetch the pokemons needed.
+  - [ ] catch and display error if pokemon not found.
 - [x] display it on console
 - [x] add search input into the html
   - [x] search by name function
-    - [ ] add buttons so that user can choose what is their search based on. (Pokemon id or name)
-    - [ ] flag to check if they're searching by name
-  - [ ] search by id function
+  - [x] search by id function
   - [ ] add the information in html
     - [x] add the img
     - [ ] add moves
-    - [ ] add ID number
+    - [x] add ID number
+    - [x] add name
     - [ ] add the previous evolution
   - [x] remove the previous pokemon which was found
 - [ ] add buttons so user can choose what information they want to be shown about the Pokemon they're searching
 
 #### Styling :
 - [x] add bootstrap 
+- [x] background for first and second row
+- [x] add borders
+- [ ] add shadows to elements with border
