@@ -39,8 +39,8 @@
     }
 
     const removeExtraRows = () => {
-        let detailRow = document.querySelector('#pokeDetails');
-        detailRow.remove();
+        let detailRow = document.querySelectorAll('.pokeDetails');
+        detailRow.forEach(el => el.remove());
     }
 
     const createRow = () => {
