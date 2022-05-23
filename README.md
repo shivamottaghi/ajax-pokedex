@@ -1,5 +1,5 @@
 # ajax-pokedex
-
+[Click here to open the published page](https://shivamottaghi.github.io/ajax-pokedex/)
 ## My Goals:
 - You can search a pokémon by name and by ID
 - Of said pokémon you need to show:
