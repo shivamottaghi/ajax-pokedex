@@ -30,7 +30,7 @@
         row.setAttribute('class', 'row align-items-center');
         row.setAttribute('id' , 'pokeDetails')
         let colImg = document.createElement('div');
-        colImg.setAttribute('class', 'col-12 col-md-3');
+        colImg.setAttribute('class', 'col-12 col-md-3 text-center');
         let imgTag = document.createElement('img');
         imgTag.setAttribute('src', detailArr.sprites.front_default);
         colImg.appendChild(imgTag);
