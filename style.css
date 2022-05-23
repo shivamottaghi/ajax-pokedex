@@ -1,0 +1,43 @@
+body{
+    background-color: #CDB4DB;
+}
+
+#searchInputRow{
+    margin-top: 10px;
+    min-height: 250px;
+    background-color: #FFC8DD;
+    background-image: url("images/jigglypuff.png");
+    background-repeat: repeat;
+}
+
+#searchInputCol{
+    padding: 10px;
+    background-color: #FFAFCC;
+}
+
+#searchLabel{
+    color: #01335E;
+    margin: 10px;
+    padding: 5px;
+    background-color: #DEC7FF;
+    border:2px solid #6D4186;
+    border-radius: 20px;
+}
+
+#searchBtn{
+    background-color: #CDB4DB;
+    margin: 10px;
+    border-width: 2px;
+    border-color: #6D4186;
+    color: #6D4186;
+}
+#pokeName{
+    background-color: #EFC8E7;
+}
+
+#pokeDetails {
+    border: 3px solid #0376DB;
+    border-radius: 40px;
+    background-color: #BDE0FE ;
+    margin-top: 10px;
+}
