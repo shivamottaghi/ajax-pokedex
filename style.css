@@ -36,8 +36,15 @@ body{
 }
 
 #pokeDetails {
-    border: 3px solid #0376DB;
+    border: 3px solid #26A9C6;
     border-radius: 40px;
-    background-color: #BDE0FE ;
+    background-color: #C7E4FE ;
     margin-top: 10px;
+}
+
+#pokeImg {
+    border: 2px dashed #2775DC;
+    margin: 10px;
+    border-radius: 25px;
+    background-color: #7EADEA;
 }

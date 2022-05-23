@@ -26,13 +26,9 @@
             removeExtraRows();
         }
         let parent = document.querySelector('.container');
-        let row = document.createElement('div');
-        row.setAttribute('class', 'row align-items-center');
-        row.setAttribute('id' , 'pokeDetails')
-        let colImg = document.createElement('div');
-        colImg.setAttribute('class', 'col-12 col-md-3 text-center');
-        let imgTag = document.createElement('img');
-        imgTag.setAttribute('src', detailArr.sprites.front_default);
+        let row = createRow();
+        let colImg = createCol();
+        let imgTag = createImg(detailArr.sprites.other.home.front_default);
         colImg.appendChild(imgTag);
         row.appendChild(colImg);
         parent.appendChild(row);
@@ -42,5 +38,25 @@
     const removeExtraRows = () => {
         let detailRow = document.querySelector('#pokeDetails');
         detailRow.remove();
+    }
+
+    const createRow = () => {
+        let row = document.createElement('div');
+        row.setAttribute('class', 'row align-items-center');
+        row.setAttribute('id' , 'pokeDetails')
+        return row;
+    }
+    const createCol = () => {
+        let col = document.createElement('div');
+        col.setAttribute('class', 'col-12 col-md-6 text-center');
+        return col;
+    }
+    const createImg = (url) => {
+        let img =  document.createElement('img');
+        img.setAttribute('src', url);
+        img.setAttribute('id', 'pokeImg');
+        img.setAttribute('class', 'shadow');
+        img.height = 250;
+        return img;
     }
 })();
