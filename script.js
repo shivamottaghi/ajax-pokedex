@@ -2,6 +2,7 @@
 
 (()=>{
     fetchPokemons();
+    let detailRowCreation = false ;
     /*______________Async Functions______________*/
     async function fetchPokemons () {
         let data = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
@@ -30,11 +31,13 @@
     }
 
     const displayPokeDetail = (detailArr) => {
-        //removeExtraRows();
+        if (detailRowCreation){
+            removeExtraRows();
+        }
         let parent = document.querySelector('.container');
         let row = document.createElement('div');
         row.setAttribute('class', 'row align-items-center');
-        row.setAttribute('id' , 'pokedetails')
+        row.setAttribute('id' , 'pokeDetails')
         let colImg = document.createElement('div');
         colImg.setAttribute('class', 'col-12 col-md-3');
         let imgTag = document.createElement('img');
@@ -42,9 +45,11 @@
         colImg.appendChild(imgTag);
         row.appendChild(colImg);
         parent.appendChild(row);
+        detailRowCreation = true;
     }
 
-    /*const removeExtraRows = () => {
-        let detailRow = document
-    }*/
+    const removeExtraRows = () => {
+        let detailRow = document.querySelector('#pokeDetails');
+        detailRow.remove();
+    }
 })();
