@@ -34,6 +34,7 @@
         colImg.appendChild(imgTag);
         let colDetails = createCol(columns);
         let detailContainer = createContainer();
+        detailContainer.classList.add('details')
         detailContainer = addIdName(detailContainer , detailArr);
         detailContainer = addMoves(detailContainer, detailArr);
         colDetails.appendChild(detailContainer);
@@ -77,14 +78,14 @@
         h3.innerHTML = `Name : ${name.toUpperCase()}`
         let h4 = document.createElement('h4');
         h4.innerHTML = `ID : ${id}`;
-        let row = createRow();
+        let row = createRow('');
         row.appendChild(h3);
         row.appendChild(h4);
         parent.appendChild(row);
         return parent;
     }
     const addMoves = (parent, arr) => {
-        let row = createRow();
+        let row = createRow('');
         let h6 = document.createElement('h6');
         h6.innerHTML= 'Moves :'
         let mymoves = [];
