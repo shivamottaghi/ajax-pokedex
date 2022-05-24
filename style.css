@@ -55,7 +55,7 @@ body{
     background-color: #7EADEA;
 }
 
-#details {
+.details {
     border: 2px dashed #2775DC;
     border-radius: 25px;
     background-color: #7EADEA;

@@ -26,12 +26,14 @@
             removeExtraRows();
         }
         let parent = document.querySelector('.container');
-        let row = createRow();
-        let colImg = createCol();
+        let otherClass = 'pokeDetails';
+        let row = createRow(otherClass);
+        let columns = 'col-12 col-md-6';
+        let colImg = createCol(columns);
         let imgTag = createImg(detailArr.sprites.other.home.front_default);
         colImg.appendChild(imgTag);
-        let colDetails = createCol();
-        colDetails = addDetails(colDetails, detailArr);
+        let colDetails = createCol(columns);
+        colDetails = addIdName(colDetails, detailArr);
         row.appendChild(colImg);
         row.appendChild(colDetails);
         parent.appendChild(row);
@@ -43,14 +45,14 @@
         detailRow.forEach(el => el.remove());
     }
 
-    const createRow = () => {
+    const createRow = (otherClass) => {
         let row = document.createElement('div');
-        row.setAttribute('class', 'row align-items-center pokeDetails');
+        row.setAttribute('class', `row align-items-center ${otherClass}`);
         return row;
     }
-    const createCol = () => {
+    const createCol = (columns) => {
         let col = document.createElement('div');
-        col.setAttribute('class', 'col-12 col-md-6 text-center');
+        col.setAttribute('class', `${columns} text-center`);
         return col;
     }
     const createImg = (url) => {
@@ -61,17 +63,24 @@
         img.height = 250;
         return img;
     }
-    const addDetails = (col , arr) => {
-        col.setAttribute('id', 'details');
-        col.classList.add('shadow');
+    const addIdName = (col , arr) => {
+        let detailDiv = document.createElement('div');
+        detailDiv.setAttribute('class', 'container details');
         let id = arr.id;
         let name = arr.name;
         let h1 = document.createElement('h1');
         h1.innerHTML = `Name : ${name.toUpperCase()}`
         let h2 = document.createElement('h2');
         h2.innerHTML = `ID : ${id}`;
-        col.appendChild(h1);
-        col.appendChild(h2);
+        let row = createRow();
+        row.appendChild(h1);
+        row.appendChild(h2);
+        detailDiv.appendChild(row);
+        //detailDiv = addMoves(detailDiv, arr);
+        col.appendChild(detailDiv);
         return col;
     }
+    /*const addMoves = (parent, arr) => {
+
+    }*/
 })();
