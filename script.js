@@ -69,7 +69,7 @@
         let h1 = document.createElement('h1');
         h1.innerHTML = `Name : ${name.toUpperCase()}`
         let h2 = document.createElement('h2');
-        h2.innerHTML = id;
+        h2.innerHTML = `ID : ${id}`;
         col.appendChild(h1);
         col.appendChild(h2);
         return col;
