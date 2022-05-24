@@ -33,13 +33,20 @@
         let imgTag = createImg(detailArr.sprites.other.home.front_default);
         colImg.appendChild(imgTag);
         let colDetails = createCol(columns);
-        colDetails = addIdName(colDetails, detailArr);
+        let detailContainer = createContainer();
+        detailContainer = addIdName(detailContainer , detailArr);
+        detailContainer = addMoves(detailContainer, detailArr);
+        colDetails.appendChild(detailContainer);
         row.appendChild(colImg);
         row.appendChild(colDetails);
         parent.appendChild(row);
         detailRowCreation = true;
     }
-
+    const createContainer = () => {
+        let container = document.createElement('div');
+        container.setAttribute('class', 'container');
+        return container;
+    }
     const removeExtraRows = () => {
         let detailRow = document.querySelectorAll('.pokeDetails');
         detailRow.forEach(el => el.remove());
@@ -63,24 +70,42 @@
         img.height = 250;
         return img;
     }
-    const addIdName = (col , arr) => {
-        let detailDiv = document.createElement('div');
-        detailDiv.setAttribute('class', 'container details');
+    const addIdName = (parent , arr) => {
         let id = arr.id;
         let name = arr.name;
-        let h1 = document.createElement('h1');
-        h1.innerHTML = `Name : ${name.toUpperCase()}`
-        let h2 = document.createElement('h2');
-        h2.innerHTML = `ID : ${id}`;
+        let h3 = document.createElement('h3');
+        h3.innerHTML = `Name : ${name.toUpperCase()}`
+        let h4 = document.createElement('h4');
+        h4.innerHTML = `ID : ${id}`;
         let row = createRow();
-        row.appendChild(h1);
-        row.appendChild(h2);
-        detailDiv.appendChild(row);
-        //detailDiv = addMoves(detailDiv, arr);
-        col.appendChild(detailDiv);
-        return col;
+        row.appendChild(h3);
+        row.appendChild(h4);
+        parent.appendChild(row);
+        return parent;
     }
-    /*const addMoves = (parent, arr) => {
-
-    }*/
+    const addMoves = (parent, arr) => {
+        let row = createRow();
+        let h6 = document.createElement('h6');
+        h6.innerHTML= 'Moves :'
+        let mymoves = [];
+        for (let i = 0 ; i < 4; i++){
+            mymoves.push(arr.moves[i].move.name);
+        }
+        let moveList = createUl(mymoves);
+        row.appendChild(h6);
+        row.appendChild(moveList);
+        parent.appendChild(row);
+        console.log(mymoves);
+        return parent;
+    }
+    const createUl = (moves) => {
+        let ul = document.createElement('ul')
+        ul.setAttribute('class', 'list-unstyled')
+        for (let i = 0; i < moves.length ; i ++){
+            let li = document.createElement('li')
+            li.innerHTML = `${moves[i]}`;
+            ul.appendChild(li);
+        }
+        return ul;
+    }
 })();
