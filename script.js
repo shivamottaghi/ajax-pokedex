@@ -26,10 +26,11 @@
         let evoUrl = await getEvoUrl(foundPokemon);
         let data2 = await fetch(`${evoUrl}`);
         let evoChain = await data2.json();
-        let chainOfEvoArr = await findEvoImageandName(evoChain.chain);
+        let chainOfEvoArr = await findEvoImageAndName(evoChain.chain);
         console.log(chainOfEvoArr);
         //console.log(evoChain);
         displayPokeDetail(foundPokemon);
+        displayChainOfEvo(chainOfEvoArr);
     }
     async function getEvoUrl (pokemon){
         console.log(pokemon)
@@ -42,7 +43,7 @@
         return evoUrl;
 
     }
-    async function findEvoImageandName (chain) {
+    async function findEvoImageAndName (chain) {
         let theFirstStateName = chain.species.name;
         let theSecondStateName = chain.evolves_to[0].species.name;
         let theThirdStateName = chain.evolves_to[0].evolves_to[0].species.name;
@@ -73,7 +74,36 @@
         return chainOfEvoArr;
     }
     /*______________Other Functions______________*/
+    const displayChainOfEvo = (arr) => {
+        let parent = document.querySelector('.container');
+        let row = createRow('pokeDetails');
 
+        let col1 = createCol('col-12 col-md-4');
+        let name1 = document.createElement('h4');
+        name1.innerHTML = arr[0].name;
+        let img1 = createImg(arr[0].url);
+        col1.appendChild(name1);
+        col1.appendChild(img1);
+
+        let col2 = createCol('col-12 col-md-4');
+        let name2 = document.createElement('h4');
+        name2.innerHTML = arr[1].name;
+        let img2 = createImg(arr[1].url);
+        col2.appendChild(name2);
+        col2.appendChild(img2);
+
+        let col3 = createCol('col-12 col-md-4');
+        let name3 = document.createElement('h4');
+        name3.innerHTML = arr[2].name;
+        let img3 = createImg(arr[2].url);
+        col3.appendChild(name3);
+        col3.appendChild(img3);
+
+        row.appendChild(col1);
+        row.appendChild(col2);
+        row.appendChild(col3);
+        parent.appendChild(row);
+    }
     const displayPokeDetail = (detailArr) => {
         if (detailRowCreation){
             removeExtraRows();
@@ -119,8 +149,8 @@
     const createImg = (url) => {
         let img =  document.createElement('img');
         img.setAttribute('src', url);
-        img.setAttribute('id', 'pokeImg');
-        img.setAttribute('class', 'shadow');
+        // img.setAttribute('id', 'pokeImg');
+        img.setAttribute('class', 'shadow pokeImg');
         img.height = 250;
         return img;
     }
