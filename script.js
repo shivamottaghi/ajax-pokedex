@@ -26,11 +26,11 @@
         let evoUrl = await getEvoUrl(foundPokemon);
         let data2 = await fetch(`${evoUrl}`);
         let evoChain = await data2.json();
-        console.log(evoChain);
+        let chainOfEvoArr = await findEvoImageandName(evoChain.chain);
+        console.log(chainOfEvoArr);
+        //console.log(evoChain);
         displayPokeDetail(foundPokemon);
     }
-
-    /*______________Other Functions______________*/
     async function getEvoUrl (pokemon){
         console.log(pokemon)
         let speciesUrl = pokemon.species.url;
@@ -42,6 +42,38 @@
         return evoUrl;
 
     }
+    async function findEvoImageandName (chain) {
+        let theFirstStateName = chain.species.name;
+        let theSecondStateName = chain.evolves_to[0].species.name;
+        let theThirdStateName = chain.evolves_to[0].evolves_to[0].species.name;
+        let data1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theFirstStateName}`);
+        let first = await data1.json();
+        // console.log(first);
+        let data2 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theSecondStateName}`);
+        let second = await data2.json();
+        let data3 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theThirdStateName}`);
+        let third = await data3.json();
+        let img1Url = first.sprites.other.home.front_default;
+        let img2Url = second.sprites.other.home.front_default;
+        let img3Url = third.sprites.other.home.front_default;
+        let chainOfEvoArr = [
+            {
+                'name': theFirstStateName,
+                'url': img1Url
+            },
+            {
+                'name': theSecondStateName,
+                'url': img2Url
+            },
+            {
+                'name':theThirdStateName,
+                'url':img3Url
+            }
+        ];
+        return chainOfEvoArr;
+    }
+    /*______________Other Functions______________*/
+
     const displayPokeDetail = (detailArr) => {
         if (detailRowCreation){
             removeExtraRows();
