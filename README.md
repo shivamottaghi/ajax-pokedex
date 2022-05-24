@@ -22,10 +22,12 @@
   - [x] search by id function
   - [ ] add the information in html
     - [x] add the img
-    - [ ] add moves
+    - [x] add moves
     - [x] add ID number
     - [x] add name
     - [ ] add the previous evolution
+      - [x] fetch from another api
+      - [ ] try to get access to at least one pokemon's evolution
   - [x] remove the previous pokemon which was found
 - [ ] add buttons so user can choose what information they want to be shown about the Pokemon they're searching
 
