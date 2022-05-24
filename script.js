@@ -3,6 +3,15 @@
 (()=>{
 
     let detailRowCreation = false;
+    /*test();
+    async function test (){
+        let data = await fetch('https://pokeapi.co/api/v2/evolution-chain/1/');
+        let response = await data.json();
+        console.log(response);
+        console.log(response.chain);
+        console.log(response.chain.evolves_to);
+        console.log(response.chain.evolves_to[0].species.name);
+    }*/
 
     document.getElementById('searchBtn').addEventListener('click' , ()=>{
         let pokemon = document.getElementById('pokeName').value ;
@@ -12,15 +21,27 @@
     /*______________Async Functions______________*/
 
     async function fetchPokemons (pokemon) {
-        let data = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-        let foundPokemon = await data.json();
-        console.log(foundPokemon);
+        let data1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+        let foundPokemon = await data1.json();
+        let evoUrl = await getEvoUrl(foundPokemon);
+        let data2 = await fetch(`${evoUrl}`);
+        let evoChain = await data2.json();
+        console.log(evoChain);
         displayPokeDetail(foundPokemon);
     }
 
     /*______________Other Functions______________*/
+    async function getEvoUrl (pokemon){
+        console.log(pokemon)
+        let speciesUrl = pokemon.species.url;
+        console.log(speciesUrl);
+        let data = await fetch(speciesUrl);
+        let species = await data.json();
+        let evoUrl = species.evolution_chain.url;
+        console.log(evoUrl);
+        return evoUrl;
 
-
+    }
     const displayPokeDetail = (detailArr) => {
         if (detailRowCreation){
             removeExtraRows();
@@ -96,7 +117,7 @@
         row.appendChild(h6);
         row.appendChild(moveList);
         parent.appendChild(row);
-        console.log(mymoves);
+        //console.log(mymoves);
         return parent;
     }
     const createUl = (moves) => {
