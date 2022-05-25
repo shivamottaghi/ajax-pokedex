@@ -3,16 +3,6 @@
 (()=>{
 
     let detailRowCreation = false;
-    /*test();
-    async function test (){
-        let data = await fetch('https://pokeapi.co/api/v2/evolution-chain/1/');
-        let response = await data.json();
-        console.log(response);
-        console.log(response.chain);
-        console.log(response.chain.evolves_to);
-        console.log(response.chain.evolves_to[0].species.name);
-    }*/
-
     document.getElementById('searchBtn').addEventListener('click' , ()=>{
         let pokemon = document.getElementById('pokeName').value ;
         fetchPokemons(pokemon);
@@ -27,10 +17,12 @@
         let data2 = await fetch(`${evoUrl}`);
         let evoChain = await data2.json();
         let chainOfEvoArr = await findEvoImageAndName(evoChain.chain);
-        console.log(chainOfEvoArr);
-        //console.log(evoChain);
+        /*console.log(chainOfEvoArr);
+        console.log(foundPokemon);*/
         displayPokeDetail(foundPokemon);
-        displayChainOfEvo(chainOfEvoArr);
+        if (chainOfEvoArr.length){
+            displayChainOfEvo(chainOfEvoArr);
+        }
     }
     async function getEvoUrl (pokemon){
         console.log(pokemon)
@@ -44,48 +36,51 @@
 
     }
     async function findEvoImageAndName (chain) {
-        let theFirstStateName = chain.species.name;
-        let theSecondStateName = chain.evolves_to[0].species.name;
-        let theThirdStateName = chain.evolves_to[0].evolves_to[0].species.name;
-        let data1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theFirstStateName}`);
-        let first = await data1.json();
-        // console.log(first);
-        let data2 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theSecondStateName}`);
-        let second = await data2.json();
-        let data3 = await fetch(`https://pokeapi.co/api/v2/pokemon/${theThirdStateName}`);
-        let third = await data3.json();
-        let img1Url = first.sprites.other.home.front_default;
-        let img2Url = second.sprites.other.home.front_default;
-        let img3Url = third.sprites.other.home.front_default;
-        let chainOfEvoArr = [
-            {
-                'name': theFirstStateName,
-                'url': img1Url
-            },
-            {
-                'name': theSecondStateName,
-                'url': img2Url
-            },
-            {
-                'name':theThirdStateName,
-                'url':img3Url
+        let secondexists = chain.evolves_to.length;
+        console.log(secondexists);
+        let chainOfEvoArr = [];
+        if (secondexists){
+            let thirdexists = chain.evolves_to[0].evolves_to.length;
+            console.log(thirdexists);
+            let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
+            chainOfEvoArr = pushImageAndName(first , chainOfEvoArr );
+            let second = await  fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].species.name}`);
+            chainOfEvoArr = pushImageAndName(second , chainOfEvoArr );
+            if (thirdexists){
+                let third = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].evolves_to[0].species.name}`);
+                chainOfEvoArr = pushImageAndName(third , chainOfEvoArr);
             }
-        ];
+        }
         return chainOfEvoArr;
     }
+    async function fetchForTheChain (url){
+        let data = await fetch(url);
+        let response = await data.json();
+        return response;
+    }
     /*______________Other Functions______________*/
+    const pushImageAndName = (jsonobj , arr) => {
+        let newObj = {'name' :  jsonobj.name , 'url': jsonobj.sprites.other.home.front_default};
+        //console.log(newObj)
+        arr.push(newObj);
+        //console.log(arr)
+        return arr;
+    }
     const displayChainOfEvo = (arr) => {
         let parent = document.querySelector('.container');
         let row = createRow('pokeDetails');
+        for (let i = 0 ; i < arr.length; i++){
+            let col = createCol('col-12 col-md-4');
+            let name = document.createElement('h4');
+            name.innerHTML = arr[i].name;
+            let img = createImg(arr[i].url);
+            col.appendChild(name);
+            col.appendChild(img);
+            row.appendChild(col);
+        }
 
-        let col1 = createCol('col-12 col-md-4');
-        let name1 = document.createElement('h4');
-        name1.innerHTML = arr[0].name;
-        let img1 = createImg(arr[0].url);
-        col1.appendChild(name1);
-        col1.appendChild(img1);
 
-        let col2 = createCol('col-12 col-md-4');
+        /*let col2 = createCol('col-12 col-md-4');
         let name2 = document.createElement('h4');
         name2.innerHTML = arr[1].name;
         let img2 = createImg(arr[1].url);
@@ -101,7 +96,7 @@
 
         row.appendChild(col1);
         row.appendChild(col2);
-        row.appendChild(col3);
+        row.appendChild(col3);*/
         parent.appendChild(row);
     }
     const displayPokeDetail = (detailArr) => {
