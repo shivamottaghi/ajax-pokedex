@@ -5,6 +5,7 @@
     let detailRowCreation = false;
     document.getElementById('searchBtn').addEventListener('click' , ()=>{
         let pokemon = document.getElementById('pokeName').value ;
+        pokemon = pokemon.toLowerCase();
         fetchPokemons(pokemon);
     })
 
@@ -17,8 +18,8 @@
         let data2 = await fetch(`${evoUrl}`);
         let evoChain = await data2.json();
         let chainOfEvoArr = await findEvoImageAndName(evoChain.chain);
-        /*console.log(chainOfEvoArr);
-        console.log(foundPokemon);*/
+        console.log(chainOfEvoArr);
+        //console.log(foundPokemon);
         displayPokeDetail(foundPokemon);
         if (chainOfEvoArr.length){
             displayChainOfEvo(chainOfEvoArr);
@@ -39,7 +40,7 @@
         let secondexists = chain.evolves_to.length;
         console.log(secondexists);
         let chainOfEvoArr = [];
-        if (secondexists){
+        if (secondexists && secondexists < 2){
             let thirdexists = chain.evolves_to[0].evolves_to.length;
             console.log(thirdexists);
             let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
@@ -49,6 +50,17 @@
             if (thirdexists){
                 let third = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].evolves_to[0].species.name}`);
                 chainOfEvoArr = pushImageAndName(third , chainOfEvoArr);
+            }
+        }else if (secondexists && secondexists > 1){
+            // Get the first one anyway
+            //let thirdexists = chain.evolves_to[0].evolves_to.length;
+
+            let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
+            chainOfEvoArr = pushImageAndName(first , chainOfEvoArr );
+            for (let i = 0 ; i < secondexists; i ++){
+                let form = await  fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[i].species.name}`);
+                console.log(form);
+                chainOfEvoArr = pushImageAndName(form , chainOfEvoArr );
             }
         }
         return chainOfEvoArr;
@@ -78,25 +90,6 @@
             col.appendChild(img);
             row.appendChild(col);
         }
-
-
-        /*let col2 = createCol('col-12 col-md-4');
-        let name2 = document.createElement('h4');
-        name2.innerHTML = arr[1].name;
-        let img2 = createImg(arr[1].url);
-        col2.appendChild(name2);
-        col2.appendChild(img2);
-
-        let col3 = createCol('col-12 col-md-4');
-        let name3 = document.createElement('h4');
-        name3.innerHTML = arr[2].name;
-        let img3 = createImg(arr[2].url);
-        col3.appendChild(name3);
-        col3.appendChild(img3);
-
-        row.appendChild(col1);
-        row.appendChild(col2);
-        row.appendChild(col3);*/
         parent.appendChild(row);
     }
     const displayPokeDetail = (detailArr) => {
