@@ -20,14 +20,14 @@
 - [x] add search input into the html
   - [x] search by name function
   - [x] search by id function
-  - [ ] add the information in html
+  - [x] add the information in html
     - [x] add the img
     - [x] add moves
     - [x] add ID number
     - [x] add name
     - [x] add the previous evolution
       - [x] fetch from another api
-      - [ ] try to get access to at least one pokemon's evolution
+      - [x] try to get access to at least one pokemon's evolution
   - [x] remove the previous pokemon which was found
 - [ ] add buttons so user can choose what information they want to be shown about the Pokemon they're searching
 
@@ -37,8 +37,7 @@
 - [x] add borders
 - [ ] add shadows to elements with border
 
-#### Exeptional pokemons:
+#### Exceptional pokemons:
 - [x] wurmple
 - [x] eevee
 - [x] zacian
-- [ ] 
