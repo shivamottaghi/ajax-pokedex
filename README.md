@@ -25,7 +25,7 @@
     - [x] add moves
     - [x] add ID number
     - [x] add name
-    - [ ] add the previous evolution
+    - [x] add the previous evolution
       - [x] fetch from another api
       - [ ] try to get access to at least one pokemon's evolution
   - [x] remove the previous pokemon which was found
@@ -36,3 +36,9 @@
 - [x] background for first and second row
 - [x] add borders
 - [ ] add shadows to elements with border
+
+#### Exeptional pokemons:
+- [x] wurmple
+- [x] eevee
+- [x] zacian
+- [ ] 
