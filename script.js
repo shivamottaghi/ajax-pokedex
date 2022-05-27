@@ -40,7 +40,7 @@
         let secondexists = chain.evolves_to.length;
         console.log(secondexists);
         let chainOfEvoArr = [];
-        if (secondexists && secondexists < 2){
+/*        if (secondexists && secondexists < 2){
             let thirdexists = chain.evolves_to[0].evolves_to.length;
             console.log(thirdexists);
             let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
@@ -51,16 +51,22 @@
                 let third = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].evolves_to[0].species.name}`);
                 chainOfEvoArr = pushImageAndName(third , chainOfEvoArr);
             }
-        }else if (secondexists && secondexists > 1){
+        }else */if (secondexists /*&& secondexists > 1*/){
             // Get the first one anyway
-            //let thirdexists = chain.evolves_to[0].evolves_to.length;
-
             let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
             chainOfEvoArr = pushImageAndName(first , chainOfEvoArr );
             for (let i = 0 ; i < secondexists; i ++){
-                let form = await  fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[i].species.name}`);
-                console.log(form);
-                chainOfEvoArr = pushImageAndName(form , chainOfEvoArr );
+                let second = await  fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[i].species.name}`);
+                console.log(second);
+                chainOfEvoArr = pushImageAndName(second , chainOfEvoArr );
+                let thirdexists = chain.evolves_to[i].evolves_to.length;
+                console.log('inside loop , third exist?' + thirdexists)
+                if (thirdexists){
+                    for (let j=0; j < thirdexists ; j++){
+                        let third = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[i].evolves_to[j].species.name}`);
+                        chainOfEvoArr = pushImageAndName(third , chainOfEvoArr);
+                    }
+                }
             }
         }
         return chainOfEvoArr;
