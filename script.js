@@ -3,6 +3,7 @@
 (()=>{
 
     let detailRowCreation = false;
+    let noEvo = false;
     document.getElementById('searchBtn').addEventListener('click' , ()=>{
         let pokemon = document.getElementById('pokeName').value ;
         pokemon = pokemon.toLowerCase();
@@ -24,6 +25,9 @@
         if (chainOfEvoArr.length){
             displayChainOfEvo(chainOfEvoArr);
         }
+        if (noEvo){
+            displayNoEvo();
+        }
     }
     async function getEvoUrl (pokemon){
         console.log(pokemon)
@@ -40,19 +44,9 @@
         let secondexists = chain.evolves_to.length;
         console.log(secondexists);
         let chainOfEvoArr = [];
-/*        if (secondexists && secondexists < 2){
-            let thirdexists = chain.evolves_to[0].evolves_to.length;
-            console.log(thirdexists);
-            let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
-            chainOfEvoArr = pushImageAndName(first , chainOfEvoArr );
-            let second = await  fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].species.name}`);
-            chainOfEvoArr = pushImageAndName(second , chainOfEvoArr );
-            if (thirdexists){
-                let third = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.evolves_to[0].evolves_to[0].species.name}`);
-                chainOfEvoArr = pushImageAndName(third , chainOfEvoArr);
-            }
-        }else */if (secondexists /*&& secondexists > 1*/){
+        if (secondexists){
             // Get the first one anyway
+            noEvo = false;
             let first = await fetchForTheChain(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
             chainOfEvoArr = pushImageAndName(first , chainOfEvoArr );
             for (let i = 0 ; i < secondexists; i ++){
@@ -68,6 +62,8 @@
                     }
                 }
             }
+        }else{
+            noEvo = true;
         }
         return chainOfEvoArr;
     }
@@ -77,6 +73,16 @@
         return response;
     }
     /*______________Other Functions______________*/
+    const displayNoEvo = () => {
+        let parent = document.querySelector('.container');
+        let row = createRow('pokeDetails');
+        let col = createCol('col-12 col-md-4 offset-md-4');
+        let h1 = document.createElement('h1');
+        h1.innerHTML = 'This Pokemon has no evolution!'
+        col.appendChild(h1);
+        row.appendChild(col);
+        parent.appendChild(row);
+    }
     const pushImageAndName = (jsonobj , arr) => {
         let newObj = {'name' :  jsonobj.name , 'url': jsonobj.sprites.other.home.front_default};
         //console.log(newObj)
