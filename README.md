@@ -15,7 +15,8 @@
   - returns a file with pokemone names and url to fetch more info about each.<br>
 *Realized that I need to fetch by name and ID there is no need to fetch all of the pokemons at the same time* 
 - [x] change your code structure so that only fetch the pokemons needed.
-  - [ ] catch and display error if pokemon not found.
+  - [x] catch and display error if pokemon not found.
+    - if the response status is 404 alerts a message
 - [x] display it on console
 - [x] add search input into the html
   - [x] search by name function
@@ -30,9 +31,11 @@
       - [x] try to get access to at least one pokemon's evolution
   - [x] remove the previous pokemon which was found
 - [ ] add buttons so user can choose what information they want to be shown about the Pokemon they're searching
+- [x] display this pokemon has no evo if it doesn't have one
 
 #### Styling :
 - [x] add bootstrap 
+  - [x] fix mobile version, doesn't work on mobile
 - [x] background for first and second row
 - [x] add borders
 - [ ] add shadows to elements with border
@@ -40,4 +43,3 @@
 #### Exceptional pokemons:
 - [x] wurmple
 - [x] eevee
-- [x] zacian
