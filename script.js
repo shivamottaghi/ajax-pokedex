@@ -14,19 +14,25 @@
 
     async function fetchPokemons (pokemon) {
         let data1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
-        let foundPokemon = await data1.json();
-        let evoUrl = await getEvoUrl(foundPokemon);
-        let data2 = await fetch(`${evoUrl}`);
-        let evoChain = await data2.json();
-        let chainOfEvoArr = await findEvoImageAndName(evoChain.chain);
-        console.log(chainOfEvoArr);
-        //console.log(foundPokemon);
-        displayPokeDetail(foundPokemon);
-        if (chainOfEvoArr.length){
-            displayChainOfEvo(chainOfEvoArr);
-        }
-        if (noEvo){
-            displayNoEvo();
+        console.log(data1.status);
+        if (data1.status == '404'){
+            window.alert('No Pokemon Found!')
+        }else{
+            let foundPokemon = await data1.json();
+
+            let evoUrl = await getEvoUrl(foundPokemon);
+            let data2 = await fetch(`${evoUrl}`);
+            let evoChain = await data2.json();
+            let chainOfEvoArr = await findEvoImageAndName(evoChain.chain);
+            console.log(chainOfEvoArr);
+            //console.log(foundPokemon);
+            displayPokeDetail(foundPokemon);
+            if (chainOfEvoArr.length){
+                displayChainOfEvo(chainOfEvoArr);
+            }
+            if (noEvo){
+                displayNoEvo();
+            }
         }
     }
     async function getEvoUrl (pokemon){
